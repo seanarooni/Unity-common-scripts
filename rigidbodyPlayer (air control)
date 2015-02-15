@@ -1,0 +1,58 @@
+//with air control
+using UnityEngine;
+using System.Collections;
+
+[RequireComponent (typeof(Rigidbody))]
+
+public class RigidPlayer : MonoBehaviour {
+
+	public float speed = 10.0f;
+	public float gravity = 10.0f;
+	public float deltaMax = 10.0f;
+	public bool canJump = true;
+	public float jumpHeight = 2.0f;
+	private bool grounded = false;
+
+	// Use this for initialization
+	void Awake () {
+		rigidbody.freezeRotation = true;
+		rigidbody.useGravity = false;
+	}
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+
+		Vector3 targetVelocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+		targetVelocity = transform.TransformDirection (targetVelocity);
+		targetVelocity *= speed;
+		
+		Vector3 velocity = rigidbody.velocity;
+		Vector3 delta = (targetVelocity - velocity);
+
+		if (grounded) {
+
+
+			delta.x = Mathf.Clamp (delta.x, -deltaMax, deltaMax);
+			delta.y = 0;
+			delta.z = Mathf.Clamp (delta.z, -deltaMax, deltaMax);
+
+			rigidbody.AddForce (delta, ForceMode.VelocityChange);
+
+			if (canJump && Input.GetButton ("Jump")) {
+				rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
+			}
+		}
+
+		rigidbody.AddForce (new Vector3 (delta.x, -gravity * rigidbody.mass, delta.z));
+		grounded = false;
+	}
+
+		void OnCollisionStay() {
+			grounded = true;
+		}
+
+		float CalculateJumpVerticalSpeed() {
+			return Mathf.Sqrt (2 * jumpHeight * gravity);
+		}
+
+}
