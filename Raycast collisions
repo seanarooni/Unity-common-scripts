@@ -1,0 +1,15 @@
+RaycastHit hit;
+		if (Physics.Raycast (transform.position, directionFacing, out hit, 0.4f)) {
+		  //to call a function/change a variable in the hit GameObject
+			if (hit.collider.gameObject.tag == "XXX") {
+				print (hit.collider.name);
+				YYY ys = hit.transform.GetComponent<YYY>();
+				ys.interact();
+			}
+			//to stop
+			if (hit.collider.tag == "wall") {
+			  return;
+			}
+		}
+		
+		//movement
