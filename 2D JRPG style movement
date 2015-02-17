@@ -15,13 +15,6 @@ public class PlayerController : MonoBehaviour {
 	Animator anim;
 	private GameObject CameraMain;
 
-
-	// Use this for initialization
-	void Awake () {
-		CameraMain = GameObject.FindGameObjectWithTag ("MainCamera");
-		CameraMain.SetActive (true);
-	}
-
 	void Start() {
 		anim = this.GetComponent<Animator> ();
 		startPoint = transform.position;
