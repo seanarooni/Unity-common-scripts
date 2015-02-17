@@ -1,5 +1,7 @@
+float range = 0.4f; //adjust as necesssary. 
+
 RaycastHit hit;
-		if (Physics.Raycast (transform.position, directionFacing, out hit, 0.4f)) {
+		if (Physics.Raycast (transform.position, directionFacing, out hit, range)) { 
 		  //to call a function/change a variable in the hit GameObject
 			if (hit.collider.gameObject.tag == "XXX") {
 				print (hit.collider.name);
