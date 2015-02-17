@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NPC : MonoBehaviour {
 
-	public string[] talkMessage;
+	public string[] talkMessage;  //public so text can be modified in the unity editor
 	private string displayText;
 	private bool showText;
 	private int messageLocation = 0;
