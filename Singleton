@@ -1,0 +1,17 @@
+public class Singleton : MonoBehavior 
+{
+  public static Singleton instance = null;
+  
+  void Awake()
+  {
+    if (instance == null) 
+    {
+      instance == this;
+    } else if (instance != this) {
+      Destroy(gameObject);
+    }
+    
+    DontDestroyOnLoad(gameObject); //this class persists between scenes
+  {
+
+}
