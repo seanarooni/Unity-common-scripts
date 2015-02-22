@@ -1,4 +1,4 @@
-public class Singleton : MonoBehavior 
+public class Singleton : MonoBehaviour 
 {
   public static Singleton instance = null;
   
@@ -14,4 +14,16 @@ public class Singleton : MonoBehavior
     DontDestroyOnLoad(gameObject); //this class persists between scenes
   {
 
+}
+
+//then in another class:
+public class Loader : Monobehaviour
+{
+  void Awake() 
+  {
+    if (Singleton.instance == null) 
+    {
+      Instantiate(Resources.Load("SingletonPrefab")); //loads the prefab if its in a folder called Resources
+    }
+  }
 }
