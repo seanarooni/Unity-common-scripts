@@ -1,137 +1,45 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class Move : MonoBehaviour {
 
-	private Vector3 startPoint;
-	private Vector3 endPoint;
-	private float moveSpeed = 4.0f;
-	private float increment;
+	private float speed = 3f;
+	private float gridSize = 1f;
+	private Vector2 input;
 	private bool isMoving = false;
-	private bool disableMovement = false;
-	private Vector3 AXIS;
-	private bool animating = false;
+	private Vector2 startPosition;
+	private Vector2 endPosition;
+	private float t;
 
-	Animator anim;
-	private GameObject CameraMain;
+	private void Update() 
+	{
+		if (!isMoving)
+		{
+			input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-	void Start() {
-		anim = this.GetComponent<Animator> ();
-		startPoint = transform.position;
-		endPoint = transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-		if (increment <= 1 && isMoving) {
-			increment += moveSpeed / 100;
-		//	print ("Moving");
-		} else {
-			isMoving = false;
-		//	print ("Stopped");
-		}
-
-		if (animating) {
-			//check if we've reached the endPoint, then return
-			transform.position = Vector3.Lerp(startPoint, endPoint, increment);
-
-			if (transform.position == endPoint)
-				animating = false;
-
-			return;
-		}
-
-
-		if (isMoving) {
-
-			if (!PathClear(AXIS))
-				return;
-
-			if (animating)
-				return;
-
-			Move (startPoint, endPoint, increment);
-		}
-
-		float V = Input.GetAxis ("Vertical");
-		float H = Input.GetAxis ("Horizontal");
-		float aV = Mathf.Abs (V);
-		float aH = Mathf.Abs (H);
-
-		if (aV > 0 || aH > 0 ) {
-			if (aV > 0 && aH>0) 
-				return;
-
-			if (!isMoving && !disableMovement) {
-				AXIS = new Vector3(H, V, 0).normalized;
-				increment = 0;
-				isMoving = true;
-				startPoint = transform.position;
-				endPoint = MovementHelper(transform.position, AXIS);
+			if (input != Vector2.zero)
+			{
+				StartCoroutine(move(transform));
 			}
 		}
 	}
 
-	bool PathClear(Vector3 dir) {
-		float d = 0.4f; //these values probably need to be tweaked slightly in the hundreths place
-		//, or a better system needs to be created
-
-		//determine raycast distance
-		if (dir.y < 0)
-			d = 0.6f;
-		if (dir.x != 0)
-			d = 0.5f;
-
-		RaycastHit hit; //need to convert this to 2D raycast.
-		if (Physics.Raycast (transform.position, dir, out hit, d)) {
-			if (hit.collider.tag == "wall") {
-				print ("wall");
-				isMoving = false;
-				return false;
-			}
-			if (hit.collider.tag == "NPC") {
-				isMoving = false;
-				return false;
-			}
-			if (hit.collider.tag == "door") {
-				Teleport(hit.collider.gameObject);
-				return false;
-			}
-		}
+	public IEnumerator move (Transform transform)
+	{
 		isMoving = true;
-		return true;
-	}
+		startPosition = transform.position;
+		t = 0;
 
-	void Teleport(GameObject door) {
-		print ("door");
-		Entrance es = door.GetComponent<Entrance> ();
-		startPoint = es.target.transform.position;
-		increment = 0;
-		isMoving = true;
-		animating = true;
-		endPoint = MovementHelper(startPoint, new Vector3(0,-1.0f,0));
-		return;
-	}
+		endPosition = new Vector2(startPosition.x + System.Math.Sign(input.x) * gridSize, startPosition.y + System.Math.Sign(input.y) * gridSize);
 
-	void Move(Vector3 sp, Vector3 ep, float inc) {
-		transform.position = Vector3.Lerp(startPoint, endPoint, increment);
-	}
+		while (t < 1f)
+		{
+			t += Time.deltaTime * (speed/gridSize);
+			transform.position = Vector2.Lerp(startPosition, endPosition, t);
+			yield return null;
+		}
 
-	Vector3 MovementHelper(Vector3 start, Vector3 input) {
-		//determine endpoint, switch to control animation.
-		int n=0;
-		if (input.x > 0)
-			n = 6;
-		if (input.x < 0) 
-			n = 4;
-		if (input.y > 0)
-			n = 8;
-		if (input.y < 0)
-			n = 2;
-
-		anim.SetInteger ("direction", n);
-
-		return new Vector3(start.x + input.x, start.y + input.y, 0);
+		isMoving = false;
+		yield return 0;
 	}
 }
