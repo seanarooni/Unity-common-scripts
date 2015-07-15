@@ -8,10 +8,10 @@ public class LoadMapFromTextFile : MonoBehaviour {
 	private TextAsset MapText;
 	private string mapString;
 
-//origin corresponds to the bottom left corner of the screen
+//origin corresponds to the top left corner of the screen
 //these correspond to default 2D settings with 8 bit tiles (@ 8 pixels per unit)
 	private float originX = -7.5f;
-	private float originY = -4.5f;
+	private float originY = 4.5f;
 
 	public TextAsset Map01Text; //set in the unity editor 
 
@@ -36,7 +36,7 @@ public class LoadMapFromTextFile : MonoBehaviour {
 			for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
 			{
 				PrintMapLine(line, row);
-				row++; //changing this to -1 each iteration would change the origin to the top left corner
+				row--; 
 			}
 		}
 
