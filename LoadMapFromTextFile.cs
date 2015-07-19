@@ -49,7 +49,7 @@ public class LoadMapFromTextFile : MonoBehaviour {
 		{
 			if (line[i].ToString() == "1")
 			{
-				Instantiate(earthTile01, new Vector2(i + originX, row + originY), Quaternion.identity);
+				Instantiate(tile01, new Vector2(i + originX, row + originY), Quaternion.identity);
 			}
 		}
 	}
