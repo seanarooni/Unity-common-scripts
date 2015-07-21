@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class NPC : MonoBehaviour {
+public class Legacy-NPC-Dialogue : MonoBehaviour {
 
 	public string[] talkMessage;  //public so text can be modified in the unity editor
 	private string displayText;
