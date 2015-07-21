@@ -1,3 +1,8 @@
+/*
+* This incomplete class provides an example of how to create an object pool using C#'s stack feature
+* It might not be the most efficient method but it has been good enough for my needs and is easy to work with. 
+*/
+
 public static Stack<GameObject> redBulletStack;// = new Stack<GameObject>(96);
 
  Awake() {
@@ -19,7 +24,7 @@ bullet.renderer.enabled = true; //all these would be false by default
 bullet.collider.enabled = true;
 bulletScript.enabled = true;
 
-//finally when you catch the bullets instaed of delorting them:
+//finally when you catch the bullets, instead of destroying them:
 
 void CleanUp() {
 Spawn.redBulletStack.Push(gameObject);
