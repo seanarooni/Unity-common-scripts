@@ -1,3 +1,7 @@
+/*
+* This is an example of how to perform 3D Raycasting in Unity3D
+*/
+
 float range = 0.4f; //adjust as necesssary. 
 
 RaycastHit hit;
@@ -14,4 +18,4 @@ RaycastHit hit;
 			}
 		}
 		
-		//movement
+		//Do a thing
