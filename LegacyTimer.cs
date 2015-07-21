@@ -7,7 +7,7 @@ Just set the starTime = Time.time again in the appropriate place to reset the cl
 using UnityEngine;
 using System.Collections;
 
-public class Timer : MonoBehaviour {
+public class LegacyTimer : MonoBehaviour {
   
 	private float startTime;
 	string textTime;
