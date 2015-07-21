@@ -1,7 +1,11 @@
+/*
+* 4-way movement style similar to games such as Pokemon.  
+*/
+
 using UnityEngine;
 using System.Collections;
 
-public class Move : MonoBehaviour {
+public class JRPGMove : MonoBehaviour {
 
 	private float speed = 3f;
 	private float gridSize = 1f;
