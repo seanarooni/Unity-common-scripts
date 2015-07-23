@@ -6,7 +6,7 @@
 
 public class Tags
 {
-	public const string example = "Example";
+	public const string example = "Example"; //corresponds to a Tag in the Unity Editor
 	public const string gameController = "GameController";
 	public const string player = "Player";
 	public const string platform = "Platform";
