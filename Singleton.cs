@@ -12,7 +12,7 @@ public class Singleton : MonoBehaviour
   {
     if (instance == null) 
     {
-      instance == this;
+      instance = this;
     } else if (instance != this) {
       Destroy(gameObject);
     }
